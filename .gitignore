@@ -37,17 +37,6 @@ env/
 config/config.yaml
 config.yaml
 
-# 资源文件（可能包含版权内容）
-resources/maps/*.png
-resources/maps/*.jpg
-resources/maps/*.jpeg
-resources/weapons/*.png
-resources/weapons/*.jpg
-resources/weapons/*.jpeg
-resources/arc/*.png
-resources/arc/*.jpg
-resources/arc/*.jpeg
-
 # 日志文件
 *.log
 *.log.*
