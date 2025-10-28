@@ -123,7 +123,11 @@ class MessageHandler:
             bot_logger.info(f"图片上传成功，URL: {image_url}")
             
             # 根据消息类型发送图片
-            raw_message = self.message._raw_message if hasattr(self.message, '_raw_message') else None
+            raw_message = self.message.raw if hasattr(self.message, 'raw') else None
+            
+            if not raw_message:
+                bot_logger.error("无法获取原始消息对象")
+                return False
             
             if isinstance(raw_message, GroupMessage):
                 # 群聊消息 - 使用image_url
