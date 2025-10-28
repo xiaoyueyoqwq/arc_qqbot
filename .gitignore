@@ -1,0 +1,88 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 配置文件（包含敏感信息）
+config/config.yaml
+config.yaml
+
+# 资源文件（可能包含版权内容）
+resources/maps/*.png
+resources/maps/*.jpg
+resources/maps/*.jpeg
+resources/weapons/*.png
+resources/weapons/*.jpg
+resources/weapons/*.jpeg
+resources/arc/*.png
+resources/arc/*.jpg
+resources/arc/*.jpeg
+
+# 日志文件
+*.log
+*.log.*
+logs/
+botpy.log
+
+# 缓存
+.cache/
+*.cache
+
+# Redis
+dump.rdb
+
+# 临时文件
+tmp/
+temp/
+*.tmp
+
+# 图片文件（临时生成）
+static/temp_images/*
+!static/temp_images/.gitkeep
+
+# Playwright
+.playwright/
+
+# 测试
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 其他
+*.bak
+*.orig

@@ -1,0 +1,122 @@
+# -*- coding: utf-8 -*-
+"""
+示例插件模板
+复制此文件并重命名为你的插件名称，例如：my_plugin.py
+"""
+import sys
+import os
+
+# 确保正确的路径设置
+current_dir = os.path.dirname(__file__)
+project_root = os.path.dirname(current_dir)
+
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+from core.plugin import Plugin, on_command, on_keyword, on_regex, on_event, Event
+from utils.message_handler import MessageHandler
+from utils.logger import bot_logger
+
+
+class ExamplePlugin(Plugin):
+    """
+    示例插件
+    
+    这个插件展示了各种功能：
+    - 命令处理
+    - 关键词匹配
+    - 正则表达式匹配
+    - 事件订阅和发布
+    - 数据持久化
+    """
+    
+    def __init__(self):
+        super().__init__()
+        
+    async def on_load(self):
+        """插件加载时调用"""
+        await super().on_load()
+        bot_logger.info(f"插件 {self.name} 已加载")
+        
+        # 从 Redis 加载数据
+        await self.load_data()
+        
+        # 初始化计数器（如果不存在）
+        if 'counter' not in self.data:
+            self.data['counter'] = 0
+            await self.save_data()
+    
+    async def on_unload(self):
+        """插件卸载时调用"""
+        # 保存数据
+        await self.save_data()
+        await super().on_unload()
+        bot_logger.info(f"插件 {self.name} 已卸载")
+    
+    @on_command("example", "示例命令")
+    async def handle_example(self, handler: MessageHandler, content: str):
+        """
+        处理 /example 命令
+        
+        示例：/example
+        """
+        await handler.send_text("这是一个示例命令！")
+    
+    @on_command("count", "显示计数器")
+    async def handle_count(self, handler: MessageHandler, content: str):
+        """
+        处理 /count 命令，展示数据持久化
+        
+        示例：/count
+        """
+        # 增加计数
+        self.data['counter'] = self.data.get('counter', 0) + 1
+        await self.save_data()
+        
+        await handler.send_text(f"计数器: {self.data['counter']}")
+    
+    @on_keyword("你好", "hello")
+    async def handle_hello(self, handler: MessageHandler, content: str):
+        """
+        处理包含"你好"或"hello"的消息
+        """
+        await handler.send_text("你好！很高兴见到你！")
+    
+    @on_regex(r"\d{11}")
+    async def handle_phone_number(self, handler: MessageHandler, content: str):
+        """
+        处理包含11位数字（手机号）的消息
+        """
+        await handler.send_text("检测到可能是手机号，请注意隐私保护！")
+    
+    @on_event("custom.event")
+    async def handle_custom_event(self, event: Event):
+        """
+        处理自定义事件
+        """
+        bot_logger.info(f"收到事件: {event.type}, 数据: {event.data}")
+    
+    @on_command("trigger", "触发自定义事件", hidden=True)
+    async def handle_trigger(self, handler: MessageHandler, content: str):
+        """
+        触发自定义事件（隐藏命令，不在帮助中显示）
+        """
+        # 发布事件
+        await self.publish(Event(
+            type="custom.event",
+            data={"message": "Hello from ExamplePlugin!"}
+        ))
+        await handler.send_text("已触发自定义事件")
+
+
+# 如果你需要多个插件类，可以在同一个文件中定义
+class AnotherExamplePlugin(Plugin):
+    """另一个示例插件"""
+    
+    def __init__(self):
+        super().__init__()
+    
+    @on_command("another", "另一个示例命令")
+    async def handle_another(self, handler: MessageHandler, content: str):
+        await handler.send_text("这是另一个插件的命令！")
+

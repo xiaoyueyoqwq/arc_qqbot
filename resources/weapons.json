@@ -1,0 +1,20 @@
+{
+  "铁砧": {
+    "name": "铁砧",
+    "aliases": ["铁砧", "Anvil"],
+    "levels": {
+      "1": {"filename": "anvil.png"},
+      "2": {"filename": "anvil2.png"},
+      "3": {"filename": "anvil3.png"}
+    }
+  },
+  "test": {
+    "name": "test",
+    "aliases": ["test", "测试"],
+    "levels": {
+      "1": {"filename": "test.png"},
+      "2": {"filename": "test2.png"},
+      "3": {"filename": "test3.png"}
+    }
+  }
+}
